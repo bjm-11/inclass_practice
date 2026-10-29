@@ -1,714 +1,1921 @@
+
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ready to go school</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ready to Go to School!</title>
 <style>
-:root{
-  --blue:#428bd5;--deep:#234d80;--yellow:#ffdc79;
-  --line:#d7e6f2;--green:#6ca66a;
+:root {
+  --blue: #b9d9ee;
+  --deep-blue: #386b91;
+  --cream: #fffdf7;
+  --pink: #f7d9d9;
+  --green: #dcebd9;
+  --ink: #304454;
+  --yellow: #fff0b7;
 }
-*{box-sizing:border-box}
-body{
-  margin:0;color:var(--deep);
-  font-family:"Trebuchet MS","Malgun Gothic",sans-serif;
-  background:
-    radial-gradient(ellipse at 10% 10%,#fff 0 4%,transparent 22%),
-    radial-gradient(ellipse at 90% 5%,#fff 0 5%,transparent 25%),
-    linear-gradient(180deg,#bfe6ff,#e9f7ff 45%,#fff7df);
-  min-height:100vh;
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: "Trebuchet MS", Arial, sans-serif;
+  background: linear-gradient(180deg, #dceefa 0%, #fffdf7 50%, #e5f0df 100%);
+  min-height: 100vh;
 }
-button,input{font:inherit}
-button{
-  border:0;border-radius:22px;padding:12px 20px;
-  cursor:pointer;font-weight:700;transition:.15s;
+button, input, textarea { font: inherit; }
+button {
+  cursor: pointer;
+  border: 2px solid #a8c7d9;
+  border-radius: 14px;
+  padding: 11px 16px;
+  background: white;
+  color: var(--ink);
+  transition: background .15s, transform .15s;
 }
-button:hover{filter:brightness(.97)}
-button:focus-visible,input:focus-visible{
-  outline:3px solid #f2bb50;outline-offset:3px
+button:hover { background: #eef7fc; }
+button:active { transform: scale(.98); }
+button:focus-visible, input:focus-visible {
+  outline: 3px solid #f0bd67;
+  outline-offset: 3px;
 }
-.primary{background:var(--blue);color:white;box-shadow:0 4px 0 #2e6fb0}
-.secondary{background:#e4f1ff;color:var(--deep)}
-button:disabled{opacity:.5;cursor:not-allowed}
-#app{max-width:900px;margin:auto;padding:14px}
-.topbar{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}
-.logo{font-weight:900;font-size:16px;color:#245b94}
-.progress{height:9px;background:#fff;border-radius:20px;overflow:hidden;flex:1;max-width:220px}
-.progress div{height:100%;width:0;background:linear-gradient(90deg,#72b6f2,#f5cd67);transition:width .3s}
-.panel{
-  background:rgba(255,252,244,.96);border:2px solid white;
-  border-radius:26px;padding:clamp(16px,4vw,30px);
-  box-shadow:0 8px 24px #5889aa1c;
+button:disabled { opacity: .5; cursor: not-allowed; }
+header {
+  text-align: center;
+  padding: 24px 14px 8px;
 }
-.hero{
-  text-align:center;min-height:420px;display:flex;flex-direction:column;
-  justify-content:center;align-items:center;overflow:hidden;
-  background:linear-gradient(180deg,#d8f0ff,#fffdf3 68%,#e2efc9);
-  border-radius:20px;padding:20px;
+h1 {
+  color: var(--deep-blue);
+  margin: 0 0 8px;
+  font-size: clamp(1.8rem, 5vw, 2.7rem);
 }
-h1{font-size:clamp(36px,8vw,60px);line-height:1.12;margin:8px 0;color:#2865a2}
-h2{margin:0 0 14px;font-size:clamp(23px,5vw,30px)}
-h3{margin:0 0 10px}
-p{line-height:1.8}
-.small{font-size:13px;color:#64809b}
-.scene{font-size:clamp(55px,12vw,90px);margin:8px}
-.school-scene{
-  width:100%;padding:15px 0;text-align:center;
-  background:linear-gradient(#d9f1ff 0 55%,#dcebbf 55%);
-  border-radius:20px;margin:15px 0;
+.subtitle { margin: 0; }
+.container { width: min(850px, 94%); margin: 0 auto 36px; }
+.card {
+  background: rgba(255,253,247,.96);
+  border: 2px solid #d4e3e8;
+  border-radius: 24px;
+  padding: clamp(18px, 4vw, 30px);
+  margin: 16px 0;
+  box-shadow: 0 7px 18px #6c94a51a;
 }
-.scene-row{display:flex;justify-content:center;align-items:end;gap:12px;font-size:clamp(34px,8vw,62px)}
-.actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:22px}
-.material{
-  background:#fffef8;border:1px solid #eadfbe;border-radius:16px;
-  padding:16px;line-height:2;font-size:15px;
+.hidden { display: none !important; }
+.center { text-align: center; }
+.progress {
+  height: 10px;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #e5eaf0;
+  margin: 16px 0;
 }
-.target{background:#fff0bd;border-radius:5px;padding:1px 4px;font-weight:bold}
-.meaning-grid{display:grid;grid-template-columns:1fr;gap:9px;margin-top:14px}
-.option{
-  text-align:left;width:100%;border:1.5px solid #d4e2ee;
-  background:#fff;border-radius:13px;color:#345779;
-  padding:12px 14px;box-shadow:none;
+.progress-fill {
+  height: 100%;
+  width: 0;
+  background: #7bb5a1;
+  transition: width .25s;
 }
-.option.selected{border:2px solid var(--blue);background:#e9f5ff}
-.option.correct{border:2px solid #6ca66a;background:#edf8e8}
-.option.wrong{border:2px solid #df8a8a;background:#fff0ef}
-.feedback{margin-top:14px;border-radius:14px;padding:13px 15px;line-height:1.7}
-.good{background:#e8f6e4;color:#326b36}
-.bad{background:#fff0ed;color:#a13d38}
-.hint{background:#fff4d6;color:#6f591d}
-.flash{
-  min-height:250px;border-radius:22px;border:2px dashed #b7d8ee;
-  background:linear-gradient(140deg,#fffdf7,#eef7ff);
-  display:flex;flex-direction:column;justify-content:center;align-items:center;
-  padding:24px;text-align:center;margin:14px 0;
+.scene {
+  background: linear-gradient(#d8edfb 0 62%, #cce3b8 62% 100%);
+  border-radius: 20px;
+  padding: 20px;
+  min-height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  font-size: clamp(2.5rem, 8vw, 4rem);
 }
-.expression{font-size:clamp(30px,7vw,43px);font-weight:900;overflow-wrap:anywhere;color:#24558b}
-.meaning{font-size:22px;margin-top:12px}
-.item-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:18px 0}
-.item{background:white;border:2px solid var(--line);border-radius:18px;padding:15px 8px;text-align:center;min-height:110px}
-.item .emoji{font-size:35px;display:block}
-.item.done{background:#edf8e9;border-color:#8fca83}
-.badge{display:inline-block;background:#e5f2ff;border-radius:20px;padding:6px 12px;font-size:13px}
-.center{text-align:center}
-.answer-input{
-  width:100%;border:2px solid #c9dce9;border-radius:14px;
-  padding:15px;background:white;color:#244a70;font-size:18px;margin-top:8px;
+.scene .emoji { filter: drop-shadow(0 3px 1px #55708020); }
+.material {
+  background: #fffaf0;
+  border: 2px dashed #d7bd8b;
+  border-radius: 16px;
+  padding: 18px;
+  line-height: 1.9;
+  font-size: 1.04rem;
 }
-.answer-input:focus{border-color:var(--blue)}
-.diary{background:#fffef7;border:2px solid #e7d8ad;border-radius:10px;padding:18px}
-.diary-line{border-bottom:1px dashed #d9d2bb;padding:12px 0}
-.diary-line label{display:block;font-weight:bold;margin-bottom:8px}
-.diary-line input{margin-top:6px;width:100%;border:1.5px solid #c9dce9;border-radius:12px;padding:12px}
-#toast{min-height:24px;font-weight:bold;text-align:center;margin-top:8px}
-footer{text-align:center;font-size:12px;color:#7c99af;padding:18px}
-@media(min-width:650px){
-  .material-layout{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
-  .item-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.expression {
+  font-weight: bold;
+  color: #2f7596;
+  background: #e8f5fb;
+  border-radius: 5px;
+  padding: 1px 4px;
 }
+.note { color: #657987; font-size: .92rem; }
+.option-list {
+  display: grid;
+  gap: 10px;
+  margin: 18px 0;
+}
+.option {
+  width: 100%;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 52px;
+  background: #fff;
+  border: 2px solid #d6e1e7;
+}
+.option .letter {
+  flex: 0 0 30px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #edf4f7;
+  font-weight: bold;
+}
+.option.selected {
+  border-color: #397da4;
+  background: #e8f5fc;
+  box-shadow: 0 0 0 2px #c8e4f3 inset;
+}
+.option.correct {
+  border-color: #61a582;
+  background: #e6f5e9;
+}
+.option.incorrect {
+  border-color: #d77b7b;
+  background: #fff0ee;
+}
+.row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.primary {
+  background: #477fa3;
+  color: white;
+  border-color: #477fa3;
+  font-weight: bold;
+}
+.primary:hover { background: #356989; }
+.feedback {
+  min-height: 28px;
+  margin: 12px 0;
+  font-weight: bold;
+}
+input[type="text"], textarea {
+  width: 100%;
+  border: 2px solid #c9dce5;
+  background: white;
+  border-radius: 12px;
+  padding: 13px;
+  color: var(--ink);
+}
+.flashcard {
+  background: #f0f7fc;
+  border: 2px solid #c8dfea;
+  border-radius: 20px;
+  padding: 25px 15px;
+  margin: 18px 0;
+}
+.flash-expression {
+  color: #2f7596;
+  font-size: clamp(1.6rem, 5vw, 2.3rem);
+  font-weight: bold;
+}
+.big-emoji { font-size: 3.2rem; }
+.item-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
+  margin: 20px 0;
+}
+.item {
+  border: 2px solid #d9e5e7;
+  border-radius: 16px;
+  padding: 15px 8px;
+  background: white;
+  text-align: center;
+}
+.item .big-emoji { font-size: 2.4rem; }
+.item.collected {
+  background: #e7f4e8;
+  border-color: #79ad87;
+}
+.item-name { font-size: .9rem; margin-top: 6px; }
+.success { color: #347d55; }
+footer { text-align: center; color: #71838b; padding: 8px 12px 28px; }
 </style>
 </head>
 <body>
-<div id="app">
-  <div class="topbar">
-    <button class="secondary" onclick="goHome()" aria-label="Home">⌂</button>
-    <div class="logo">☀ Ready to go school</div>
-    <div class="progress"><div id="progressBar"></div></div>
-    <span id="stepCount" class="small">START</span>
+<header>
+  <h1>☁️ Ready to Go to School! 🎒</h1>
+  <p class="subtitle">Learn English, collect your school supplies, and start your day!</p>
+</header>
+
+<main class="container">
+  <div class="progress" aria-label="Activity progress">
+    <div class="progress-fill" id="progressFill"></div>
   </div>
-  <main id="screen" class="panel"></main>
-  <div id="toast" role="status"></div>
-  <footer>Little steps, big progress! ☁️</footer>
-</div>
+
+  <section id="welcome" class="card center">
+    <div class="scene">
+      <span class="emoji">☁️</span>
+      <span class="emoji">🏫</span>
+      <span class="emoji">🧑🏻‍🎓</span>
+      <span class="emoji">🌷</span>
+    </div>
+    <h2>Good morning!</h2>
+    <p>You're getting ready for school. Let's learn six useful English expressions and pack everything you need.</p>
+    <button class="primary" id="startBtn">Let's Start! ✨</button>
+  </section>
+
+  <section id="materialSection" class="card hidden">
+    <h2>📖 Step 1. Read the story</h2>
+    <p>Keep this learning material visible while you answer all six questions.</p>
+    <div class="material" id="storyText"></div>
+    <h3>Choose the correct meaning</h3>
+    <p class="note">Select one answer. The choices will stay in the same positions until you move to the next question.</p>
+    <div id="materialQuestion"></div>
+  </section>
+
+  <section id="flashSection" class="card hidden">
+    <h2>🪄 Step 2. Expression flashcards</h2>
+    <p>Review the meaning and spelling. The expression's pronunciation will play automatically when each card appears.</p>
+    <div class="flashcard center">
+      <div class="big-emoji" id="flashEmoji">📚</div>
+      <div class="flash-expression" id="flashExpression"></div>
+      <h3 id="flashMeaning"></h3>
+      <p id="flashExample"></p>
+      <p class="note" id="flashCount"></p>
+      <button id="speakBtn">🔊 Hear it again</button>
+    </div>
+    <div class="row" style="justify-content:center">
+      <button id="prevFlash">← Previous</button>
+      <button class="primary" id="nextFlash">Next →</button>
+    </div>
+  </section>
+
+  <section id="quizSection" class="card hidden">
+    <h2>✏️ Step 3. Remember the expressions</h2>
+    <p>Type the English expression or its Korean meaning, depending on the question.</p>
+    <div id="quizQuestion"></div>
+  </section>
+
+  <section id="mindsetSection" class="card hidden">
+    <h2>🌱 Step 4. Get ready with a positive mindset</h2>
+    <p>Which thought can help you have a good day at school?</p>
+    <div class="option-list" id="mindsetOptions">
+      <button class="option" data-mindset="0"><span class="letter">A</span><span>I can learn something new today.</span></button>
+      <button class="option" data-mindset="1"><span class="letter">B</span><span>I should never make a mistake.</span></button>
+      <button class="option" data-mindset="2"><span class="letter">C</span><span>I should give up when something is difficult.</span></button>
+    </div>
+    <div id="mindsetFeedback" class="feedback" aria-live="polite"></div>
+    <button class="primary hidden" id="mindsetContinue">Let's Pack! 🎒</button>
+  </section>
+
+  <section id="packingSection" class="card hidden">
+    <h2>🎒 Step 5. Pack your school supplies</h2>
+    <p>Answer each question correctly to collect the item. You can retry if you make a mistake.</p>
+    <div class="item-grid" id="itemGrid"></div>
+    <div id="packingQuestion"></div>
+  </section>
+
+  <section id="arrivalSection" class="card hidden center">
+    <div class="scene">
+      <span class="emoji">🏫</span>
+      <span class="emoji">🧑🏻‍🎓</span>
+      <span class="emoji">🎒</span>
+      <span class="emoji">🌞</span>
+    </div>
+    <h2>You've arrived at school!</h2>
+    <p>You learned your expressions and packed your supplies. Great job!</p>
+    <button class="primary" id="diaryStart">Write Your English Diary 📔</button>
+  </section>
+
+  <section id="diarySection" class="card hidden">
+    <h2>📔 Step 6. My English diary</h2>
+    <p>Read the story again. Write the Korean meaning of each expression in your own words.</p>
+    <div class="material" id="diaryStory"></div>
+    <div id="diaryQuestions"></div>
+    <div class="feedback" id="diaryFeedback" aria-live="polite"></div>
+    <button class="primary" id="diarySubmit">Check My Diary</button>
+    <button class="primary hidden" id="finishBtn">Finish! 🎉</button>
+  </section>
+
+  <section id="finishSection" class="card center hidden">
+    <div class="scene">
+      <span class="emoji">🌈</span>
+      <span class="emoji">🏫</span>
+      <span class="emoji">🎒</span>
+      <span class="emoji">⭐</span>
+    </div>
+    <h2>Congratulations! 🎉</h2>
+    <p>You completed every activity and reviewed all six expressions.</p>
+    <p class="success"><strong>You are ready to make a difference today!</strong></p>
+    <button id="restartBtn">Start Again ↻</button>
+  </section>
+</main>
+
+<footer>One step at a time. Keep learning! 🌼</footer>
 
 <script>
 "use strict";
 
 const targets = [
- {phrase:"in charge of",meaning:"~을 담당하는",
-  english:"to be responsible for something",
-  hint:"어떤 일이나 사람을 책임지고 관리하는 것"},
- {phrase:"take part in",meaning:"~에 참여하다",
-  english:"to participate in an activity",
-  hint:"행사나 활동에 함께 참여하는 것"},
- {phrase:"figure out",meaning:"알아내다, 이해하다",
-  english:"to understand or find an answer",
-  hint:"생각해서 답이나 해결 방법을 알아내는 것"},
- {phrase:"work on",meaning:"~을 계속하다, 노력하다",
-  english:"to spend time improving or doing something",
-  hint:"어떤 일을 더 잘하기 위해 시간을 들여 노력하는 것"},
- {phrase:"cut down on",meaning:"~을 줄이다",
-  english:"to reduce the amount of something",
-  hint:"양이나 정도를 이전보다 적게 만드는 것"},
- {phrase:"make a difference",meaning:"차이를 만들다, 변화를 가져오다",
-  english:"to have an important effect",
-  hint:"어떤 것에 의미 있는 변화나 영향을 주는 것"}
+  {
+    expression: "in charge of",
+    meaning: "책임지고 있는",
+    accepted: ["책임지고 있는", "책임을 맡고 있는", "담당하는", "담당하고 있는", "책임지는", "담당"],
+    example: "Mina is in charge of the English booth.",
+    emoji: "🧑🏻‍💼",
+    hint: "It means being responsible for something."
+  },
+  {
+    expression: "take part in",
+    meaning: "참여하다",
+    accepted: ["참여하다", "참가하다", "참여하는", "참가하는"],
+    example: "Everyone can take part in a short quiz game.",
+    emoji: "🙋",
+    hint: "It means to participate in an activity."
+  },
+  {
+    expression: "figure out",
+    meaning: "알아내다, 해결하다",
+    accepted: ["알아내다", "해결하다", "알아내다 해결하다", "생각해 내다", "이해하다"],
+    example: "The team could not figure out how to make the activity interesting.",
+    emoji: "💡",
+    hint: "It means to find an answer or understand something."
+  },
+  {
+    expression: "work on",
+    meaning: "공들여 하다, 작업하다",
+    accepted: ["공들여 하다", "작업하다", "노력하다", "계속 작업하다", "개선하다", "공들여하다"],
+    example: "They decided to work on a mystery theme.",
+    emoji: "🛠️",
+    hint: "It means to spend time and effort doing or improving something."
+  },
+  {
+    expression: "cut down on",
+    meaning: "~을 줄이다",
+    accepted: ["줄이다", "양을 줄이다", "감소시키다", "줄이는"],
+    example: "They decided to cut down on long instructions.",
+    emoji: "✂️",
+    hint: "It means to reduce the amount of something."
+  },
+  {
+    expression: "make a difference",
+    meaning: "변화를 가져오다, 영향을 주다",
+    accepted: ["변화를 가져오다", "영향을 주다", "차이를 만들다", "변화를 만들다", "긍정적인 영향을 주다"],
+    example: "They hope these changes will make a difference for the students.",
+    emoji: "🌟",
+    hint: "It means to have an important or positive effect."
+  }
 ];
 
-const material = [
- "Our class is preparing for the school festival.",
- "Mina is in charge of the English booth. She asked everyone to take part in a short quiz game.",
- "At first, the team could not figure out how to make the activity interesting.",
- "They decided to work on a mystery theme.",
- "After testing the game, they decided to cut down on long instructions.",
- "They hope these changes will make a difference for the students who visit the booth."
-];
+const story = "Our class is preparing for the school festival. Mina is in charge of the English booth. She asked everyone to take part in a short quiz game. At first, the team could not figure out how to make the activity interesting. They decided to work on a mystery theme. After testing the game, they decided to cut down on long instructions. They hope these changes will make a difference for the students who visit the booth.";
 
-const supplies = [
- {name:"연필",emoji:"✏️",desc:"Pencil"},
- {name:"물통",emoji:"🧴",desc:"Water bottle"},
- {name:"가방",emoji:"🎒",desc:"School bag"},
- {name:"영어 교과서",emoji:"📗",desc:"English textbook"},
- {name:"안경",emoji:"👓",desc:"Glasses"}
+const $ = id => document.getElementById(id);
+const sections = [
+  "welcome", "materialSection", "flashSection", "quizSection",
+  "mindsetSection", "packingSection", "arrivalSection",
+  "diarySection", "finishSection"
 ];
 
 const state = {
- stage:"welcome",
- materialIndex:0,
- materialAnswers:{},
- materialChecked:{},
- materialOptionSets:[],
- flashIndex:0,
- quizQueue:[],
- quizIndex:0,
- typedAnswer:"",
- quizChecked:false,
- quizCorrect:false,
- quizAttempts:0,
- quizHintLevel:0,
- items:[],
- mindsetDone:false,
- diaryAnswers:{},
- diaryChecked:false
+  materialIndex: 0,
+  materialOptions: [],
+  materialSelected: null,
+  materialChecked: false,
+  materialCorrect: 0,
+  flashIndex: 0,
+  quizOrder: [],
+  quizIndex: 0,
+  typedAnswer: "",
+  quizChecked: false,
+  mindsetSelected: null,
+  packIndex: 0,
+  collected: [],
+  packSelected: null,
+  packChecked: false,
+  diaryChecked: false
 };
 
-const stages=["welcome","material","materialQuiz","flash","quiz","mindset","packing","journey","diary","finish"];
-const screen=document.getElementById("screen");
-const toast=document.getElementById("toast");
-
-function progress(){
- const i=stages.indexOf(state.stage);
- document.getElementById("progressBar").style.width=
-  Math.max(0,i)/(stages.length-1)*100+"%";
- document.getElementById("stepCount").textContent=i===0?"START":`${i}/${stages.length-1}`;
+function showSection(id) {
+  sections.forEach(section => $(section).classList.toggle("hidden", section !== id));
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-function say(text){
- if(!("speechSynthesis" in window)){
-  toast.textContent="This browser does not support speech playback.";
-  return;
- }
- window.speechSynthesis.cancel();
- const utterance=new SpeechSynthesisUtterance(text);
- utterance.lang="en-US";
- utterance.rate=.82;
- window.speechSynthesis.speak(utterance);
+function setProgress(percent) {
+  $("progressFill").style.width = percent + "%";
 }
 
-function stopSpeech(){
- if("speechSynthesis" in window)window.speechSynthesis.cancel();
+function shuffle(items) {
+  const result = items.slice();
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
 }
 
-function setStage(stage){
- stopSpeech();
- state.stage=stage;
- toast.textContent="";
- render();
- window.scrollTo({top:0,behavior:"smooth"});
+function normalize(value) {
+  return value.toLowerCase().trim().replace(/[.,!?;:'"“”‘’]/g, "").replace(/\s+/g, " ");
 }
 
-function goHome(){
- if(state.stage==="welcome"){render();return;}
- if(!confirm("처음 화면으로 돌아갈까요? 학습 진행 상황은 초기화돼요."))return;
- stopSpeech();
- Object.assign(state,{
-  stage:"welcome",materialIndex:0,materialAnswers:{},materialChecked:{},
-  materialOptionSets:[],flashIndex:0,quizQueue:[],quizIndex:0,
-  typedAnswer:"",quizChecked:false,quizCorrect:false,quizAttempts:0,
-  quizHintLevel:0,items:[],mindsetDone:false,diaryAnswers:{},diaryChecked:false
- });
- render();
+function renderStory(targetId) {
+  let html = story;
+  targets.forEach(t => {
+    const escaped = t.expression.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    html = html.replace(new RegExp(escaped, "g"),
+      `<span class="expression">${t.expression}</span>`);
+  });
+  $(targetId).innerHTML = html;
 }
 
-function render(){
- progress();
- const views={
-  welcome:welcomeView,material:materialView,materialQuiz:materialQuizView,
-  flash:flashView,quiz:quizView,mindset:mindsetView,packing:packingView,
-  journey:journeyView,diary:diaryView,finish:finishView
- };
- screen.innerHTML=views[state.stage]();
- if(state.stage==="flash")say(targets[state.flashIndex].phrase);
- if(state.stage==="materialQuiz")attachMaterialEvents();
- if(state.stage==="quiz")attachQuizEvents();
- if(state.stage==="diary")attachDiaryEvents();
+function startApp() {
+  state.materialIndex = 0;
+  state.materialSelected = null;
+  state.materialChecked = false;
+  state.materialCorrect = 0;
+
+  // IMPORTANT: Build and save every option set ONCE before the quiz begins.
+  // Rendering, selecting, and checking answers never shuffle these arrays.
+  state.materialOptions = targets.map((target, index) => {
+    const distractors = shuffle(
+      targets.filter((_, i) => i !== index).map(t => t.meaning)
+    ).slice(0, 3);
+    return shuffle([target.meaning, ...distractors]);
+  });
+
+  renderStory("storyText");
+  showSection("materialSection");
+  setProgress(5);
+  renderMaterialQuestion();
 }
 
-function welcomeView(){return `
- <div class="hero">
-  <div class="scene">☁️ ☀️ ☁️</div>
-  <div class="scene">🏫🌳</div>
-  <h1>Ready to<br>go school!</h1>
-  <p>Let's get ready for school<br>and learn useful English expressions!</p>
-  <div class="scene">👧🏻🎒</div>
-  <p class="badge">🎨 A watercolor school-day adventure</p>
-  <div class="actions"><button class="primary" onclick="setStage('material')">Start my day →</button></div>
- </div>`;}
+function renderMaterialQuestion() {
+  const index = state.materialIndex;
+  const target = targets[index];
+  const fixedOptions = state.materialOptions[index];
+  state.materialSelected = null;
+  state.materialChecked = false;
 
-function highlight(text){
- const escaped=text.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
- return escaped.replace(/in charge of|take part in|figure out|work on|cut down on|make a difference/gi,
-  m=>`<span class="target">${m}</span>`);
-}
-
-function materialView(){return `
- <h2>📖 Learning Material</h2>
- <p>Read the story about our school festival. The target expressions are highlighted.</p>
- <div class="material">${material.map(line=>`<div>${highlight(line)}</div>`).join("")}</div>
- <p class="small">Read carefully. You will answer six questions about these expressions.</p>
- <div class="actions"><button class="primary" onclick="startMaterialQuiz()">Start the 6 questions →</button></div>`;}
-
-/* FIX 1: Generate every question's options once.
-   Re-rendering never changes the order or the answer's position. */
-function shuffle(array){
- const result=[...array];
- for(let i=result.length-1;i>0;i--){
-  const j=Math.floor(Math.random()*(i+1));
-  [result[i],result[j]]=[result[j],result[i]];
- }
- return result;
-}
-
-function startMaterialQuiz(){
- state.materialIndex=0;
- state.materialAnswers={};
- state.materialChecked={};
- state.materialOptionSets=targets.map((t,index)=>
-  shuffle(targets.map((x,j)=>({text:x.meaning,correct:j===index})))
- );
- setStage("materialQuiz");
-}
-
-function materialQuizView(){
- const i=state.materialIndex,t=targets[i];
- const options=state.materialOptionSets[i];
- const checked=!!state.materialChecked[i];
- const answer=state.materialAnswers[i];
- const correct=answer!==undefined&&options[answer]?.correct;
-
- return `
- <h2>💡 Learning Material Quiz</h2>
- <p>Question ${i+1} of 6: Choose the best Korean meaning.</p>
- <div class="material-layout">
-  <section>
-   <h3>📖 Learning Material</h3>
-   <div class="material">${material.map(line=>`<div>${highlight(line)}</div>`).join("")}</div>
-  </section>
-  <section>
-   <div class="badge">Question ${i+1} / 6</div>
-   <div class="flash" style="min-height:150px">
-    <div class="expression" style="font-size:30px">${t.phrase}</div>
-    <button class="secondary" onclick="say(targets[${i}].phrase)">🔊 Listen</button>
-   </div>
-   <div class="meaning-grid">
-    ${options.map((o,j)=>`
-     <button class="option
-      ${answer===j&&!checked?'selected':''}
-      ${checked&&o.correct?'correct':''}
-      ${checked&&answer===j&&!o.correct?'wrong':''}"
-      data-mat-option="${j}" ${checked?'disabled':''}>
-      ${String.fromCharCode(65+j)}. ${o.text}
-     </button>`).join("")}
-   </div>
-   ${checked?`
-    <div class="feedback ${correct?'good':'hint'}">
-     ${correct?"✓ Correct!":"Not quite. The correct meaning is:"}
-     <br><b>${t.phrase} = ${t.meaning}</b>
+  const host = $("materialQuestion");
+  host.innerHTML = `
+    <h4>Question ${index + 1} of ${targets.length}</h4>
+    <p>What does <strong class="expression">${target.expression}</strong> mean?</p>
+    <div class="option-list" id="materialOptionList"></div>
+    <div id="materialFeedback" class="feedback" aria-live="polite"></div>
+    <div class="row">
+      <button class="primary" type="button" id="materialCheck">Check Answer</button>
+      <button class="primary hidden" type="button" id="materialNext">Next Question →</button>
     </div>
-    <div class="actions">
-     <button class="primary" onclick="nextMaterialQuestion()">
-      ${i===5?"Review the flashcards →":"Next question →"}
-     </button>
-    </div>`:`
-    <div class="actions">
-     <button class="primary" id="checkMaterial"
-      ${answer===undefined?'disabled':''}>Check answer</button>
-    </div>`}
-  </section>
- </div>`;
-}
+  `;
 
-function attachMaterialEvents(){
- screen.querySelectorAll("[data-mat-option]").forEach(btn=>{
-  btn.addEventListener("click",()=>{
-   const i=state.materialIndex;
-   if(state.materialChecked[i])return;
-   state.materialAnswers[i]=Number(btn.dataset.matOption);
-   render();
+  const list = $("materialOptionList");
+
+  // Each button is created once for this question.
+  // Click handlers only update the selected styling; they do not rebuild the list.
+  fixedOptions.forEach((optionText, optionIndex) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "option";
+    button.dataset.optionIndex = String(optionIndex);
+
+    const letter = document.createElement("span");
+    letter.className = "letter";
+    letter.textContent = String.fromCharCode(65 + optionIndex);
+
+    const text = document.createElement("span");
+    text.textContent = optionText;
+
+    button.append(letter, text);
+    button.addEventListener("click", () => {
+      if (state.materialChecked) return;
+      state.materialSelected = optionIndex;
+
+      // No innerHTML replacement, rerender, or shuffling here.
+      list.querySelectorAll(".option").forEach((b, i) => {
+        b.classList.toggle("selected", i === optionIndex);
+      });
+      $("materialFeedback").textContent = "";
+    });
+    list.appendChild(button);
   });
- });
- const check=document.getElementById("checkMaterial");
- if(check)check.addEventListener("click",()=>{
-  const i=state.materialIndex;
-  if(state.materialAnswers[i]===undefined)return;
-  state.materialChecked[i]=true;
-  render();
- });
+
+  $("materialCheck").addEventListener("click", checkMaterialAnswer);
+  $("materialNext").addEventListener("click", nextMaterialQuestion);
 }
 
-function nextMaterialQuestion(){
- if(state.materialIndex<5){
+function checkMaterialAnswer() {
+  if (state.materialChecked) return;
+  if (state.materialSelected === null) {
+    $("materialFeedback").textContent = "Please select an answer first.";
+    return;
+  }
+
+  const index = state.materialIndex;
+  const correctIndex = state.materialOptions[index].indexOf(targets[index].meaning);
+  const buttons = $("materialOptionList").querySelectorAll(".option");
+  const isCorrect = state.materialSelected === correctIndex;
+
+  state.materialChecked = true;
+  buttons.forEach((button, i) => {
+    button.disabled = true;
+    if (i === correctIndex) button.classList.add("correct");
+    if (i === state.materialSelected && !isCorrect) button.classList.add("incorrect");
+  });
+
+  if (isCorrect) {
+    state.materialCorrect++;
+    $("materialFeedback").textContent = "Correct! Great job! ✨";
+    $("materialFeedback").className = "feedback success";
+  } else {
+    $("materialFeedback").textContent =
+      "Not quite. The correct meaning is: " + targets[index].meaning + ".";
+    $("materialFeedback").className = "feedback";
+  }
+
+  $("materialCheck").disabled = true;
+  $("materialNext").classList.remove("hidden");
+  $("materialNext").textContent =
+    index === targets.length - 1 ? "Review Flashcards →" : "Next Question →";
+}
+
+function nextMaterialQuestion() {
+  if (!state.materialChecked) return;
   state.materialIndex++;
-  render();
- }else{
-  state.flashIndex=0;
-  setStage("flash");
- }
+  setProgress(5 + state.materialIndex / targets.length * 20);
+
+  if (state.materialIndex >= targets.length) {
+    state.flashIndex = 0;
+    showSection("flashSection");
+    renderFlashcard();
+    return;
+  }
+  renderMaterialQuestion();
 }
 
-function flashView(){
- const t=targets[state.flashIndex];
- return `
- <div class="topbar"><span class="badge">🗂️ Flash Card</span><span>${state.flashIndex+1} / 6</span></div>
- <h2>Learn the expression</h2>
- <div class="flash">
-  <div class="expression">${t.phrase}</div>
-  <div class="meaning">${t.meaning}</div>
-  <p class="small">${t.english}</p>
-  <p class="small">Listen and repeat!</p>
-  <button class="secondary" onclick="say(targets[${state.flashIndex}].phrase)">🔊 Listen again</button>
- </div>
- <p class="center">Remember the spelling and meaning.</p>
- <div class="actions">
-  ${state.flashIndex>0?`<button class="secondary" onclick="changeFlash(-1)">← Previous</button>`:""}
-  <button class="primary" onclick="nextFlash()">${state.flashIndex===5?"Start the short-answer quiz! →":"Next card →"}</button>
- </div>`;
+function speak(text) {
+  if (!("speechSynthesis" in window)) return;
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = "en-US";
+  utterance.rate = 0.85;
+  window.speechSynthesis.speak(utterance);
 }
 
-function changeFlash(d){
- state.flashIndex=Math.max(0,Math.min(5,state.flashIndex+d));
- render();
+function renderFlashcard() {
+  const target = targets[state.flashIndex];
+  $("flashEmoji").textContent = target.emoji;
+  $("flashExpression").textContent = target.expression;
+  $("flashMeaning").textContent = target.meaning;
+  $("flashExample").textContent = target.example;
+  $("flashCount").textContent =
+    `Card ${state.flashIndex + 1} of ${targets.length}`;
+
+  $("prevFlash").disabled = state.flashIndex === 0;
+  $("nextFlash").textContent =
+    state.flashIndex === targets.length - 1 ? "Start Quiz →" : "Next →";
+
+  // Speak automatically when the card is shown.
+  speak(target.expression);
 }
 
-function nextFlash(){
- if(state.flashIndex<5){state.flashIndex++;render();}
- else startQuiz();
+$("prevFlash").addEventListener("click", () => {
+  if (state.flashIndex > 0) {
+    state.flashIndex--;
+    renderFlashcard();
+  }
+});
+
+$("nextFlash").addEventListener("click", () => {
+  if (state.flashIndex < targets.length - 1) {
+    state.flashIndex++;
+    renderFlashcard();
+  } else {
+    startShortAnswerQuiz();
+  }
+});
+
+$("speakBtn").addEventListener("click", () => {
+  speak(targets[state.flashIndex].expression);
+});
+
+function startShortAnswerQuiz() {
+  // Randomize question order once, then keep it unchanged.
+  state.quizOrder = shuffle(targets.map((_, i) => i));
+  state.quizIndex = 0;
+  state.typedAnswer = "";
+  state.quizChecked = false;
+  showSection("quizSection");
+  renderQuizQuestion();
+  setProgress(30);
 }
 
-function startQuiz(){
- state.quizQueue=shuffle([...targets.keys()]).map(targetIndex=>({
-  targetIndex,type:Math.random()<.5?"meaning":"spelling"
- }));
- state.quizIndex=0;
- resetCurrentQuiz();
- setStage("quiz");
-}
+function renderQuizQuestion() {
+  const targetIndex = state.quizOrder[state.quizIndex];
+  const target = targets[targetIndex];
+  const askForMeaning = Math.random() < 0.5;
 
-function resetCurrentQuiz(){
- state.typedAnswer="";
- state.quizChecked=false;
- state.quizCorrect=false;
- state.quizAttempts=0;
- state.quizHintLevel=0;
-}
+  // The question type is chosen once and saved on the question record.
+  state.currentQuiz = {
+    targetIndex,
+    askForMeaning,
+    hintShown: false
+  };
 
-/* FIX 2: Use a direct button click handler instead of relying on form submission. */
-function quizView(){
- const q=state.quizQueue[state.quizIndex];
- const t=targets[q.targetIndex];
- const spelling=q.type==="spelling";
- const prompt=spelling
-  ?`Type the English expression that means “${t.meaning}”.`
-  :`Type the Korean meaning of “${t.phrase}”.`;
+  $("quizQuestion").innerHTML = `
+    <h4>Question ${state.quizIndex + 1} of ${targets.length}</h4>
+    <p>${askForMeaning
+      ? `Write the Korean meaning of <strong>${target.expression}</strong>.`
+      : `Write the English expression that means <strong>${target.meaning}</strong>.`}</p>
+    <input type="text" id="quizInput" autocomplete="off"
+      placeholder="${askForMeaning ? "Type the Korean meaning..." : "Type the English expression..."}">
+    <p class="note" id="quizHint">You can try again if your answer is incorrect.</p>
+    <div class="feedback" id="quizFeedback" aria-live="polite"></div>
+    <div class="row">
+      <button type="button" class="primary" id="quizCheck">Check Answer</button>
+      <button type="button" class="primary hidden" id="quizNext">Next Question →</button>
+    </div>
+  `;
 
- let feedback="";
- if(state.quizChecked){
-  feedback=state.quizCorrect
-   ?`<div class="feedback good"><b>✓ Correct!</b><br>${t.phrase} — ${t.meaning}</div>`
-   :`<div class="feedback bad"><b>Not quite yet!</b><br>Check the hint and try again.</div>
-     <div class="feedback hint"><b>💡 Hint</b><br>
-     ${spelling?spellingHint(t,state.quizHintLevel):t.hint}
-     <br><br><button type="button" class="secondary" onclick="say(targets[${q.targetIndex}].phrase)">🔊 Listen again</button>
-     </div>`;
- }
-
- return `
- <div class="topbar"><span class="badge">✏️ Short-answer Quiz</span><span>${state.quizIndex+1} / 6</span></div>
- <h2>Can you remember it?</h2>
- <p>${prompt}</p>
- ${spelling?`<button type="button" class="secondary" onclick="say(targets[${q.targetIndex}].phrase)">🔊 Listen to the expression</button>`:""}
- <div>
-  <label class="small" for="shortAnswer">${spelling?"English expression":"Korean meaning"}</label>
-  <input class="answer-input" id="shortAnswer" type="text"
-   placeholder="${spelling?"Type the English expression...":"한국어 뜻을 입력하세요..."}"
-   value="${escapeAttr(state.typedAnswer)}"
-   ${state.quizCorrect?'disabled':''}
-   autocomplete="off" autocapitalize="off" spellcheck="false">
- </div>
- ${feedback}
- <div class="actions">
-  ${!state.quizCorrect?
-   `<button type="button" class="primary" id="checkShortAnswer">Check answer</button>`:
-   `<button type="button" class="primary" onclick="nextQuestion()">
-    ${state.quizIndex===5?"Get ready for school! →":"Next question →"}
-   </button>`}
- </div>
- <p class="small center">You can try as many times as you need.</p>`;
-}
-
-function spellingHint(t,level){
- if(level<=1)return `The expression has ${t.phrase.split(" ").length} words. Listen carefully and check the spaces.`;
- if(level===2)return `First word: <b>${t.phrase.split(" ")[0]}</b>.`;
- return `The expression is spelled: <b>${t.phrase}</b>.`;
-}
-
-function attachQuizEvents(){
- const input=document.getElementById("shortAnswer");
- const check=document.getElementById("checkShortAnswer");
-
- if(input){
-  input.addEventListener("input",()=>{
-   state.typedAnswer=input.value;
-   if(state.quizChecked&&!state.quizCorrect){
-    state.quizChecked=false;
-    state.quizCorrect=false;
-   }
+  const input = $("quizInput");
+  input.addEventListener("input", () => {
+    state.typedAnswer = input.value;
   });
-  if(!state.quizCorrect)input.focus({preventScroll:true});
- }
-
- if(check)check.addEventListener("click",checkQuizAnswer);
-
- if(input){
-  input.addEventListener("keydown",e=>{
-   if(e.key==="Enter"){
-    e.preventDefault();
-    if(state.quizCorrect)nextQuestion();
-    else checkQuizAnswer();
-   }
+  input.addEventListener("keydown", event => {
+    if (event.key === "Enter" && !state.quizChecked) checkQuizAnswer();
   });
- }
+
+  $("quizCheck").addEventListener("click", checkQuizAnswer);
+  $("quizNext").addEventListener("click", nextQuizQuestion);
+  state.typedAnswer = "";
 }
 
-function checkQuizAnswer(){
- if(state.quizCorrect)return;
- const input=document.getElementById("shortAnswer");
- if(!input)return;
+function checkQuizAnswer() {
+  if (state.quizChecked) return;
 
- state.typedAnswer=input.value;
- const raw=state.typedAnswer.trim();
- if(!raw){
-  toast.textContent="Please type your answer first.";
-  input.focus();
-  return;
- }
+  const input = $("quizInput");
+  const answer = normalize(input.value);
+  if (!answer) {
+    $("quizFeedback").textContent = "Please type an answer first.";
+    return;
+  }
 
- const q=state.quizQueue[state.quizIndex];
- const t=targets[q.targetIndex];
- state.quizAttempts++;
+  const target = targets[state.currentQuiz.targetIndex];
+  let correct;
 
- const correct=q.type==="spelling"
-  ?normalizeEnglish(raw)===normalizeEnglish(t.phrase)
-  :normalizeKorean(raw,t.meaning,t.phrase);
+  if (state.currentQuiz.askForMeaning) {
+    correct = target.accepted.some(item => normalize(item) === answer);
+  } else {
+    correct = normalize(target.expression) === answer;
+  }
 
- state.quizChecked=true;
- state.quizCorrect=correct;
-
- if(!correct)state.quizHintLevel=Math.min(3,state.quizHintLevel+1);
-
- toast.textContent="";
- render();
-
- if(correct)say(t.phrase);
- else{
-  const newInput=document.getElementById("shortAnswer");
-  if(newInput)newInput.focus({preventScroll:true});
- }
+  if (correct) {
+    state.quizChecked = true;
+    input.disabled = true;
+    $("quizFeedback").textContent = "Correct! Well done! ⭐";
+    $("quizFeedback").className = "feedback success";
+    $("quizCheck").disabled = true;
+    $("quizNext").classList.remove("hidden");
+    $("quizHint").textContent = "Great memory!";
+  } else {
+    $("quizFeedback").textContent = "Not yet. Try again!";
+    $("quizFeedback").className = "feedback";
+    $("quizHint").textContent = state.currentQuiz.askForMeaning
+      ? "Hint: " + target.hint
+      : "Hint: " + target.hint + " Check the spelling on your flashcards.";
+    input.focus();
+    input.select();
+  }
 }
 
-function normalizeEnglish(s){
- return s.toLowerCase().trim()
-  .replace(/[.,!?'"“”‘’]/g,"")
-  .replace(/\s+/g," ");
-}
-
-function normalizeKorean(answer,meaning,phrase){
- const clean=s=>s.toLowerCase().replace(/\s+/g,"")
-  .replace(/[~·,，.。!?]/g,"");
- const a=clean(answer);
- const accepted={
-  "in charge of":["담당하다","책임지다","~을담당하다","~를담당하다","책임을맡다","맡다"],
-  "take part in":["참여하다","참가하다","~에참여하다","~에참가하다"],
-  "figure out":["알아내다","이해하다","파악하다","~을알아내다","~을이해하다"],
-  "work on":["노력하다","계속하다","~에노력하다","~을계속하다","~을위해노력하다"],
-  "cut down on":["줄이다","감소시키다","~을줄이다","~를줄이다"],
-  "make a difference":["차이를만들다","변화를가져오다","영향을주다","변화를만들다"]
- };
- if(a===clean(meaning))return true;
- return (accepted[phrase]||[]).some(v=>a===clean(v));
-}
-
-function nextQuestion(){
- if(state.quizIndex<state.quizQueue.length-1){
+function nextQuizQuestion() {
+  if (!state.quizChecked) return;
   state.quizIndex++;
-  resetCurrentQuiz();
-  render();
- }else{
-  state.mindsetDone=false;
-  setStage("mindset");
- }
+  setProgress(30 + state.quizIndex / targets.length * 20);
+
+  if (state.quizIndex >= targets.length) {
+    showSection("mindsetSection");
+    return;
+  }
+
+  state.quizChecked = false;
+  state.typedAnswer = "";
+  renderQuizQuestion();
 }
 
-function mindsetView(){
- const options=[
-  "A. I can do my best!",
-  "B. It is okay to give up.",
-  "C. I do not need to try.",
-  "D. School is boring."
- ];
- return `
- <h2>🌞 One Last Thing!</h2>
- <p>Choose a helpful mindset for going to school.</p>
- <div class="school-scene"><div class="scene-row">☁️ 👧🏻 🎒 🏫</div></div>
- <h3>What should you tell yourself before school?</h3>
- <div class="meaning-grid">${options.map((o,i)=>`
-  <button class="option" onclick="chooseMindset(${i})" ${state.mindsetDone?'disabled':''}>${o}</button>
- `).join("")}</div>
- ${state.mindsetDone?`
-  <div class="feedback good">🌟 That's right! Believe in yourself and try your best.</div>
-  <div class="actions"><button class="primary" onclick="setStage('packing')">Pack my bag →</button></div>`:""}`;
-}
+$("mindsetOptions").querySelectorAll(".option").forEach(button => {
+  button.addEventListener("click", () => {
+    if (state.mindsetSelected !== null) return;
+    state.mindsetSelected = Number(button.dataset.mindset);
 
-function chooseMindset(i){
- if(i===0){
-  state.mindsetDone=true;
-  toast.textContent="";
-  render();
- }else{
-  toast.textContent="Try again! Choose a positive and encouraging thought.";
- }
-}
+    $("mindsetOptions").querySelectorAll(".option").forEach(b => {
+      b.disabled = true;
+      b.classList.toggle("selected", b === button);
+    });
 
-function packingView(){
- const count=state.items.length;
- return `
- <h2>🎒 Pack Your School Bag!</h2>
- <p>Tap each item to put it in your bag. Collect all five items before leaving.</p>
- <div class="center"><span class="badge">${count} / 5 items collected</span></div>
- <div class="item-grid">${supplies.map((s,i)=>{
-  const done=state.items.includes(i);
-  return `<button class="item ${done?'done':''}" onclick="toggleItem(${i})" ${done?'disabled':''}>
-   <span class="emoji">${done?'✅':s.emoji}</span><b>${s.name}</b><br>
-   <span class="small">${done?'Packed!':s.desc}</span>
-  </button>`;
- }).join("")}</div>
- <div class="school-scene"><div class="scene-row">🎒 ${count===5?'✨':'📚'} ☁️</div></div>
- ${count===5?`
-  <div class="feedback good center">Everything is packed. You're ready to go!</div>
-  <div class="actions"><button class="primary" onclick="setStage('journey')">Let's go to school! →</button></div>`:
-  `<p class="center small">Don't forget anything!</p>`}`;
-}
-
-function toggleItem(i){
- if(!state.items.includes(i))state.items.push(i);
- render();
-}
-
-function journeyView(){return `
- <div class="center">
-  <span class="badge">☀️ A brand-new day</span>
-  <h2>Let's go to school!</h2>
-  <p>You've packed your school supplies and prepared your mind.</p>
-  <div class="school-scene">
-   <div class="scene-row">🌳 👧🏻🎒 🏫</div>
-   <p><b>Welcome to school!</b></p>
-  </div>
-  <p>Now, remember what you've learned in your school-day diary.</p>
-  <div class="actions"><button class="primary" onclick="setStage('diary')">Open My School Day →</button></div>
- </div>`;}
-
-function diaryView(){
- const lines=[
-  {phrase:"in charge of",before:"Mina was ",after:" the English booth."},
-  {phrase:"take part in",before:"She asked everyone to ",after:" a short quiz game."},
-  {phrase:"figure out",before:"The team tried to ",after:" how to make the activity interesting."},
-  {phrase:"work on",before:"They decided to ",after:" a mystery theme."},
-  {phrase:"cut down on",before:"They decided to ",after:" long instructions."},
-  {phrase:"make a difference",before:"They hoped the changes would ",after:" for the students."}
- ];
- return `
- <h2>📔 My School Day</h2>
- <p>Write the Korean meaning of each target expression.</p>
- <div class="diary">
-  <div class="center"><h3>✏️ My School Day</h3><span class="small">A diary from today's English class</span></div>
-  <p>Today, I learned about our school festival. Mina was in charge of the English booth. Everyone was invited to take part in a quiz game. The team tried to figure out how to make it interesting. They decided to work on a mystery theme and cut down on long instructions. They hoped the changes would make a difference for the students.</p>
-  <hr style="border:0;border-top:1px dashed #d9d2bb">
-  ${lines.map((x,i)=>`
-   <div class="diary-line">
-    <label for="diary${i}">${i+1}. ${x.phrase}</label>
-    <div class="small">${x.before}<b>${x.phrase}</b>${x.after}</div>
-    <input id="diary${i}" type="text" maxlength="100"
-     placeholder="Write the Korean meaning..."
-     value="${escapeAttr(state.diaryAnswers[i]||"")}">
-   </div>`).join("")}
-  <div id="diaryFeedback"></div>
- </div>
- <div class="actions">
-  <button class="secondary" onclick="checkDiary()">Check my diary</button>
-  ${state.diaryChecked?`<button class="primary" onclick="setStage('finish')">Finish my day! 🎉</button>`:""}
- </div>
- <p class="small center">Different Korean wording is okay if it expresses the correct meaning.</p>`;
-}
-
-function attachDiaryEvents(){
- targets.forEach((t,i)=>{
-  const input=document.getElementById("diary"+i);
-  input.addEventListener("input",()=>{
-   state.diaryAnswers[i]=input.value;
-   state.diaryChecked=false;
+    if (state.mindsetSelected === 0) {
+      $("mindsetFeedback").textContent =
+        "Exactly! You can learn from mistakes and keep improving. 🌱";
+      $("mindsetFeedback").className = "feedback success";
+    } else {
+      $("mindsetFeedback").textContent =
+        "Remember, learning takes time. Try to be kind to yourself!";
+    }
+    $("mindsetContinue").classList.remove("hidden");
   });
- });
+});
+
+const schoolItems = [
+  {
+    name: "Pencil",
+    emoji: "✏️",
+    question: "Which expression means 'to reduce the amount of something'?",
+    answer: "cut down on"
+  },
+  {
+    name: "Water bottle",
+    emoji: "🧴",
+    question: "Which expression means 'to participate in an activity'?",
+    answer: "take part in"
+  },
+  {
+    name: "School bag",
+    emoji: "🎒",
+    question: "Which expression means 'to be responsible for something'?",
+    answer: "in charge of"
+  },
+  {
+    name: "English textbook",
+    emoji: "📘",
+    question: "Which expression means 'to find an answer or solution'?",
+    answer: "figure out"
+  },
+  {
+    name: "Glasses",
+    emoji: "👓",
+    question: "Which expression means 'to have an important or positive effect'?",
+    answer: "make a difference"
+  }
+];
+
+function startPacking() {
+  state.packIndex = 0;
+  state.collected = [];
+  state.packSelected = null;
+  state.packChecked = false;
+  showSection("packingSection");
+  renderItemGrid();
+  renderPackingQuestion();
+  setProgress(55);
 }
 
-function escapeAttr(s){
- return String(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;")
-  .replace(/</g,"&lt;").replace(/>/g,"&gt;");
+function renderItemGrid() {
+  $("itemGrid").innerHTML = "";
+  schoolItems.forEach((item, index) => {
+    const div = document.createElement("div");
+    div.className = "item" + (state.collected.includes(index) ? " collected" : "");
+    div.innerHTML = `
+      <div class="big-emoji">${item.emoji}</div>
+      <div class="item-name">${item.name}</div>
+      <div>${state.collected.includes(index) ? "✓ Collected" : "Not yet"}</div>
+    `;
+    $("itemGrid").appendChild(div);
+  });
 }
 
-function checkDiary(){
- targets.forEach((t,i)=>{
-  const input=document.getElementById("diary"+i);
-  if(input)state.diaryAnswers[i]=input.value;
- });
- const missing=targets.filter((t,i)=>!(state.diaryAnswers[i]||"").trim());
- const feedback=document.getElementById("diaryFeedback");
+function renderPackingQuestion() {
+  if (state.packIndex >= schoolItems.length) {
+    showSection("arrivalSection");
+    setProgress(80);
+    return;
+  }
 
- if(missing.length){
-  feedback.className="feedback hint";
-  feedback.textContent=`You have ${missing.length} expression(s) left. Fill in all six meanings to finish your diary.`;
-  return;
- }
- state.diaryChecked=true;
- render();
+  state.packSelected = null;
+  state.packChecked = false;
+  const item = schoolItems[state.packIndex];
+  const choices = shuffle(targets.map(t => t.expression));
+
+  $("packingQuestion").innerHTML = `
+    <h3>${item.emoji} Collect: ${item.name}</h3>
+    <p>${item.question}</p>
+    <div class="option-list" id="packingOptions"></div>
+    <div class="feedback" id="packingFeedback" aria-live="polite"></div>
+    <button class="primary" type="button" id="packingCheck">Check Answer</button>
+    <button class="primary hidden" type="button" id="packingNext">Collect Item →</button>
+  `;
+
+  const list = $("packingOptions");
+  choices.forEach((choice, index) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "option";
+    button.dataset.choice = choice;
+    button.innerHTML =
+      `<span class="letter">${String.fromCharCode(65 + index)}</span><span>${choice}</span>`;
+
+    button.addEventListener("click", () => {
+      if (state.packChecked) return;
+      state.packSelected = choice;
+      list.querySelectorAll(".option").forEach(b => {
+        b.classList.toggle("selected", b === button);
+      });
+      $("packingFeedback").textContent = "";
+    });
+    list.appendChild(button);
+  });
+
+  $("packingCheck").addEventListener("click", checkPackingAnswer);
+  $("packingNext").addEventListener("click", nextPackingItem);
 }
 
-function finishView(){return `
- <div class="hero">
-  <div class="scene">☁️ ⭐ ☀️</div>
-  <h1 style="font-size:clamp(38px,8vw,55px)">Congratulations!</h1>
-  <div class="scene">🎒👧🏻🏫</div>
-  <h2>You did it!</h2>
-  <p>You reviewed all six target expressions,<br>finished your school-day diary,<br>and got ready for school!</p>
-  <div class="material" style="text-align:left;width:100%">
-   <b>Today's expressions</b>
-   ${targets.map((t,i)=>`<div>${i+1}. <b>${t.phrase}</b> — ${escapeAttr(state.diaryAnswers[i]||t.meaning)}</div>`).join("")}
+function checkPackingAnswer() {
+  if (state.packChecked) return;
+  if (!state.packSelected) {
+    $("packingFeedback").textContent = "Choose an answer first.";
+    return;
+  }
+
+  const item = schoolItems[state.packIndex];
+  const correct = state.packSelected === item.answer;
+  const buttons = $("packingOptions").querySelectorAll(".option");
+
+  if (correct) {
+    state.packChecked = true;
+    state.collected.push(state.packIndex);
+    buttons.forEach(button => {
+      button.disabled = true;
+      if (button.dataset.choice === item.answer) button.classList.add("correct");
+    });
+    $("packingFeedback").textContent = "Correct! Item collected! 🎉";
+    $("packingFeedback").className = "feedback success";
+    $("packingCheck").disabled = true;
+    $("packingNext").classList.remove("hidden");
+  } else {
+    $("packingFeedback").textContent = "Try again! Hint: " +
+      targets.find(t => t.expression === item.answer).hint;
+    $("packingFeedback").className = "feedback";
+    buttons.forEach(button => {
+      if (button.dataset.choice === state.packSelected) {
+        button.classList.add("incorrect");
+      }
+    });
+  }
+}
+
+function nextPackingItem() {
+  if (!state.packChecked) return;
+  state.packIndex++;
+  renderItemGrid();
+  setProgress(55 + state.packIndex / schoolItems.length * 25);
+  renderPackingQuestion();
+}
+
+function startDiary() {
+  state.diaryChecked = false;
+  renderStory("diaryStory");
+
+  $("diaryQuestions").innerHTML = "";
+  targets.forEach((target, index) => {
+    const label = document.createElement("label");
+    label.style.display = "block";
+    label.style.margin = "16px 0 7px";
+    label.innerHTML = `<strong>${index + 1}. ${target.expression}</strong>`;
+
+    const input = document.createElement("input");
+    input.type = "text";
+    input.id = "diary" + index;
+    input.placeholder = "Write the Korean meaning...";
+    input.autocomplete = "off";
+    input.setAttribute("aria-label", target.expression + " Korean meaning");
+
+    $("diaryQuestions").append(label, input);
+  });
+
+  $("diaryFeedback").textContent = "";
+  $("diarySubmit").classList.remove("hidden");
+  $("diarySubmit").disabled = false;
+  $("finishBtn").classList.add("hidden");
+  showSection("diarySection");
+  setProgress(90);
+}
+
+$("diarySubmit").addEventListener("click", () => {
+  let missing = [];
+  targets.forEach((target, index) => {
+    const input = $("diary" + index);
+    if (!input.value.trim()) missing.push(index + 1);
+  });
+
+  if (missing.length) {
+    $("diaryFeedback").textContent =
+      "Please complete every expression before checking your diary.";
+    $("diaryFeedback").className = "feedback";
+    $("diary" + (missing[0] - 1)).focus();
+    return;
+  }
+
+  let matched = 0;
+  targets.forEach((target, index) => {
+    const input = $("diary" + index);
+    const answer = normalize(input.value);
+    const isCorrect = target.accepted.some(item => normalize(item) === answer);
+    input.style.borderColor = isCorrect ? "#61a582" : "#d77b7b";
+    if (isCorrect) matched++;
+  });
+
+  if (matched === targets.length) {
+    state.diaryChecked = true;
+    $("diaryFeedback").textContent =
+      "All six meanings are correct! You remembered every expression. 🌟";
+    $("diaryFeedback").className = "feedback success";
+    $("diarySubmit").classList.add("hidden");
+    $("finishBtn").classList.remove("hidden");
+    setProgress(100);
+  } else {
+    $("diaryFeedback").textContent =
+      `${matched} of 6 correct. Review the expressions and try again.`;
+    $("diaryFeedback").className = "feedback";
+  }
+});
+
+$("startBtn").addEventListener("click", startApp);
+$("mindsetContinue").addEventListener("click", startPacking);
+$("diaryStart").addEventListener("click", startDiary);
+$("finishBtn").addEventListener("click", () => {
+  showSection("finishSection");
+  setProgress(100);
+});
+$("restartBtn").addEventListener("click", () => {
+  window.speechSynthesis?.cancel();
+  state.mindsetSelected = null;
+  $("mindsetOptions").querySelectorAll(".option").forEach(button => {
+    button.disabled = false;
+    button.classList.remove("selected");
+  });
+  $("mindsetContinue").classList.add("hidden");
+  $("mindsetFeedback").textContent = "";
+  startApp();
+});
+</script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ready to Go to School!</title>
+<style>
+:root {
+  --blue: #b9d9ee;
+  --deep-blue: #386b91;
+  --cream: #fffdf7;
+  --pink: #f7d9d9;
+  --green: #dcebd9;
+  --ink: #304454;
+  --yellow: #fff0b7;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: "Trebuchet MS", Arial, sans-serif;
+  background: linear-gradient(180deg, #dceefa 0%, #fffdf7 50%, #e5f0df 100%);
+  min-height: 100vh;
+}
+button, input, textarea { font: inherit; }
+button {
+  cursor: pointer;
+  border: 2px solid #a8c7d9;
+  border-radius: 14px;
+  padding: 11px 16px;
+  background: white;
+  color: var(--ink);
+  transition: background .15s, transform .15s;
+}
+button:hover { background: #eef7fc; }
+button:active { transform: scale(.98); }
+button:focus-visible, input:focus-visible {
+  outline: 3px solid #f0bd67;
+  outline-offset: 3px;
+}
+button:disabled { opacity: .5; cursor: not-allowed; }
+header {
+  text-align: center;
+  padding: 24px 14px 8px;
+}
+h1 {
+  color: var(--deep-blue);
+  margin: 0 0 8px;
+  font-size: clamp(1.8rem, 5vw, 2.7rem);
+}
+.subtitle { margin: 0; }
+.container { width: min(850px, 94%); margin: 0 auto 36px; }
+.card {
+  background: rgba(255,253,247,.96);
+  border: 2px solid #d4e3e8;
+  border-radius: 24px;
+  padding: clamp(18px, 4vw, 30px);
+  margin: 16px 0;
+  box-shadow: 0 7px 18px #6c94a51a;
+}
+.hidden { display: none !important; }
+.center { text-align: center; }
+.progress {
+  height: 10px;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #e5eaf0;
+  margin: 16px 0;
+}
+.progress-fill {
+  height: 100%;
+  width: 0;
+  background: #7bb5a1;
+  transition: width .25s;
+}
+.scene {
+  background: linear-gradient(#d8edfb 0 62%, #cce3b8 62% 100%);
+  border-radius: 20px;
+  padding: 20px;
+  min-height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  font-size: clamp(2.5rem, 8vw, 4rem);
+}
+.scene .emoji { filter: drop-shadow(0 3px 1px #55708020); }
+.material {
+  background: #fffaf0;
+  border: 2px dashed #d7bd8b;
+  border-radius: 16px;
+  padding: 18px;
+  line-height: 1.9;
+  font-size: 1.04rem;
+}
+.expression {
+  font-weight: bold;
+  color: #2f7596;
+  background: #e8f5fb;
+  border-radius: 5px;
+  padding: 1px 4px;
+}
+.note { color: #657987; font-size: .92rem; }
+.option-list {
+  display: grid;
+  gap: 10px;
+  margin: 18px 0;
+}
+.option {
+  width: 100%;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 52px;
+  background: #fff;
+  border: 2px solid #d6e1e7;
+}
+.option .letter {
+  flex: 0 0 30px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #edf4f7;
+  font-weight: bold;
+}
+.option.selected {
+  border-color: #397da4;
+  background: #e8f5fc;
+  box-shadow: 0 0 0 2px #c8e4f3 inset;
+}
+.option.correct {
+  border-color: #61a582;
+  background: #e6f5e9;
+}
+.option.incorrect {
+  border-color: #d77b7b;
+  background: #fff0ee;
+}
+.row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.primary {
+  background: #477fa3;
+  color: white;
+  border-color: #477fa3;
+  font-weight: bold;
+}
+.primary:hover { background: #356989; }
+.feedback {
+  min-height: 28px;
+  margin: 12px 0;
+  font-weight: bold;
+}
+input[type="text"], textarea {
+  width: 100%;
+  border: 2px solid #c9dce5;
+  background: white;
+  border-radius: 12px;
+  padding: 13px;
+  color: var(--ink);
+}
+.flashcard {
+  background: #f0f7fc;
+  border: 2px solid #c8dfea;
+  border-radius: 20px;
+  padding: 25px 15px;
+  margin: 18px 0;
+}
+.flash-expression {
+  color: #2f7596;
+  font-size: clamp(1.6rem, 5vw, 2.3rem);
+  font-weight: bold;
+}
+.big-emoji { font-size: 3.2rem; }
+.item-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
+  margin: 20px 0;
+}
+.item {
+  border: 2px solid #d9e5e7;
+  border-radius: 16px;
+  padding: 15px 8px;
+  background: white;
+  text-align: center;
+}
+.item .big-emoji { font-size: 2.4rem; }
+.item.collected {
+  background: #e7f4e8;
+  border-color: #79ad87;
+}
+.item-name { font-size: .9rem; margin-top: 6px; }
+.success { color: #347d55; }
+footer { text-align: center; color: #71838b; padding: 8px 12px 28px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>☁️ Ready to Go to School! 🎒</h1>
+  <p class="subtitle">Learn English, collect your school supplies, and start your day!</p>
+</header>
+
+<main class="container">
+  <div class="progress" aria-label="Activity progress">
+    <div class="progress-fill" id="progressFill"></div>
   </div>
-  <p><b>Keep learning and have a wonderful day! 🌼</b></p>
-  <div class="actions"><button class="primary" onclick="goHome()">⌂ Start again</button></div>
- </div>`;}
 
-render();
+  <section id="welcome" class="card center">
+    <div class="scene">
+      <span class="emoji">☁️</span>
+      <span class="emoji">🏫</span>
+      <span class="emoji">🧑🏻‍🎓</span>
+      <span class="emoji">🌷</span>
+    </div>
+    <h2>Good morning!</h2>
+    <p>You're getting ready for school. Let's learn six useful English expressions and pack everything you need.</p>
+    <button class="primary" id="startBtn">Let's Start! ✨</button>
+  </section>
+
+  <section id="materialSection" class="card hidden">
+    <h2>📖 Step 1. Read the story</h2>
+    <p>Keep this learning material visible while you answer all six questions.</p>
+    <div class="material" id="storyText"></div>
+    <h3>Choose the correct meaning</h3>
+    <p class="note">Select one answer. The choices will stay in the same positions until you move to the next question.</p>
+    <div id="materialQuestion"></div>
+  </section>
+
+  <section id="flashSection" class="card hidden">
+    <h2>🪄 Step 2. Expression flashcards</h2>
+    <p>Review the meaning and spelling. The expression's pronunciation will play automatically when each card appears.</p>
+    <div class="flashcard center">
+      <div class="big-emoji" id="flashEmoji">📚</div>
+      <div class="flash-expression" id="flashExpression"></div>
+      <h3 id="flashMeaning"></h3>
+      <p id="flashExample"></p>
+      <p class="note" id="flashCount"></p>
+      <button id="speakBtn">🔊 Hear it again</button>
+    </div>
+    <div class="row" style="justify-content:center">
+      <button id="prevFlash">← Previous</button>
+      <button class="primary" id="nextFlash">Next →</button>
+    </div>
+  </section>
+
+  <section id="quizSection" class="card hidden">
+    <h2>✏️ Step 3. Remember the expressions</h2>
+    <p>Type the English expression or its Korean meaning, depending on the question.</p>
+    <div id="quizQuestion"></div>
+  </section>
+
+  <section id="mindsetSection" class="card hidden">
+    <h2>🌱 Step 4. Get ready with a positive mindset</h2>
+    <p>Which thought can help you have a good day at school?</p>
+    <div class="option-list" id="mindsetOptions">
+      <button class="option" data-mindset="0"><span class="letter">A</span><span>I can learn something new today.</span></button>
+      <button class="option" data-mindset="1"><span class="letter">B</span><span>I should never make a mistake.</span></button>
+      <button class="option" data-mindset="2"><span class="letter">C</span><span>I should give up when something is difficult.</span></button>
+    </div>
+    <div id="mindsetFeedback" class="feedback" aria-live="polite"></div>
+    <button class="primary hidden" id="mindsetContinue">Let's Pack! 🎒</button>
+  </section>
+
+  <section id="packingSection" class="card hidden">
+    <h2>🎒 Step 5. Pack your school supplies</h2>
+    <p>Answer each question correctly to collect the item. You can retry if you make a mistake.</p>
+    <div class="item-grid" id="itemGrid"></div>
+    <div id="packingQuestion"></div>
+  </section>
+
+  <section id="arrivalSection" class="card hidden center">
+    <div class="scene">
+      <span class="emoji">🏫</span>
+      <span class="emoji">🧑🏻‍🎓</span>
+      <span class="emoji">🎒</span>
+      <span class="emoji">🌞</span>
+    </div>
+    <h2>You've arrived at school!</h2>
+    <p>You learned your expressions and packed your supplies. Great job!</p>
+    <button class="primary" id="diaryStart">Write Your English Diary 📔</button>
+  </section>
+
+  <section id="diarySection" class="card hidden">
+    <h2>📔 Step 6. My English diary</h2>
+    <p>Read the story again. Write the Korean meaning of each expression in your own words.</p>
+    <div class="material" id="diaryStory"></div>
+    <div id="diaryQuestions"></div>
+    <div class="feedback" id="diaryFeedback" aria-live="polite"></div>
+    <button class="primary" id="diarySubmit">Check My Diary</button>
+    <button class="primary hidden" id="finishBtn">Finish! 🎉</button>
+  </section>
+
+  <section id="finishSection" class="card center hidden">
+    <div class="scene">
+      <span class="emoji">🌈</span>
+      <span class="emoji">🏫</span>
+      <span class="emoji">🎒</span>
+      <span class="emoji">⭐</span>
+    </div>
+    <h2>Congratulations! 🎉</h2>
+    <p>You completed every activity and reviewed all six expressions.</p>
+    <p class="success"><strong>You are ready to make a difference today!</strong></p>
+    <button id="restartBtn">Start Again ↻</button>
+  </section>
+</main>
+
+<footer>One step at a time. Keep learning! 🌼</footer>
+
+<script>
+"use strict";
+
+const targets = [
+  {
+    expression: "in charge of",
+    meaning: "책임지고 있는",
+    accepted: ["책임지고 있는", "책임을 맡고 있는", "담당하는", "담당하고 있는", "책임지는", "담당"],
+    example: "Mina is in charge of the English booth.",
+    emoji: "🧑🏻‍💼",
+    hint: "It means being responsible for something."
+  },
+  {
+    expression: "take part in",
+    meaning: "참여하다",
+    accepted: ["참여하다", "참가하다", "참여하는", "참가하는"],
+    example: "Everyone can take part in a short quiz game.",
+    emoji: "🙋",
+    hint: "It means to participate in an activity."
+  },
+  {
+    expression: "figure out",
+    meaning: "알아내다, 해결하다",
+    accepted: ["알아내다", "해결하다", "알아내다 해결하다", "생각해 내다", "이해하다"],
+    example: "The team could not figure out how to make the activity interesting.",
+    emoji: "💡",
+    hint: "It means to find an answer or understand something."
+  },
+  {
+    expression: "work on",
+    meaning: "공들여 하다, 작업하다",
+    accepted: ["공들여 하다", "작업하다", "노력하다", "계속 작업하다", "개선하다", "공들여하다"],
+    example: "They decided to work on a mystery theme.",
+    emoji: "🛠️",
+    hint: "It means to spend time and effort doing or improving something."
+  },
+  {
+    expression: "cut down on",
+    meaning: "~을 줄이다",
+    accepted: ["줄이다", "양을 줄이다", "감소시키다", "줄이는"],
+    example: "They decided to cut down on long instructions.",
+    emoji: "✂️",
+    hint: "It means to reduce the amount of something."
+  },
+  {
+    expression: "make a difference",
+    meaning: "변화를 가져오다, 영향을 주다",
+    accepted: ["변화를 가져오다", "영향을 주다", "차이를 만들다", "변화를 만들다", "긍정적인 영향을 주다"],
+    example: "They hope these changes will make a difference for the students.",
+    emoji: "🌟",
+    hint: "It means to have an important or positive effect."
+  }
+];
+
+const story = "Our class is preparing for the school festival. Mina is in charge of the English booth. She asked everyone to take part in a short quiz game. At first, the team could not figure out how to make the activity interesting. They decided to work on a mystery theme. After testing the game, they decided to cut down on long instructions. They hope these changes will make a difference for the students who visit the booth.";
+
+const $ = id => document.getElementById(id);
+const sections = [
+  "welcome", "materialSection", "flashSection", "quizSection",
+  "mindsetSection", "packingSection", "arrivalSection",
+  "diarySection", "finishSection"
+];
+
+const state = {
+  materialIndex: 0,
+  materialOptions: [],
+  materialSelected: null,
+  materialChecked: false,
+  materialCorrect: 0,
+  flashIndex: 0,
+  quizOrder: [],
+  quizIndex: 0,
+  typedAnswer: "",
+  quizChecked: false,
+  mindsetSelected: null,
+  packIndex: 0,
+  collected: [],
+  packSelected: null,
+  packChecked: false,
+  diaryChecked: false
+};
+
+function showSection(id) {
+  sections.forEach(section => $(section).classList.toggle("hidden", section !== id));
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function setProgress(percent) {
+  $("progressFill").style.width = percent + "%";
+}
+
+function shuffle(items) {
+  const result = items.slice();
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+}
+
+function normalize(value) {
+  return value.toLowerCase().trim().replace(/[.,!?;:'"“”‘’]/g, "").replace(/\s+/g, " ");
+}
+
+function renderStory(targetId) {
+  let html = story;
+  targets.forEach(t => {
+    const escaped = t.expression.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    html = html.replace(new RegExp(escaped, "g"),
+      `<span class="expression">${t.expression}</span>`);
+  });
+  $(targetId).innerHTML = html;
+}
+
+function startApp() {
+  state.materialIndex = 0;
+  state.materialSelected = null;
+  state.materialChecked = false;
+  state.materialCorrect = 0;
+
+  // IMPORTANT: Build and save every option set ONCE before the quiz begins.
+  // Rendering, selecting, and checking answers never shuffle these arrays.
+  state.materialOptions = targets.map((target, index) => {
+    const distractors = shuffle(
+      targets.filter((_, i) => i !== index).map(t => t.meaning)
+    ).slice(0, 3);
+    return shuffle([target.meaning, ...distractors]);
+  });
+
+  renderStory("storyText");
+  showSection("materialSection");
+  setProgress(5);
+  renderMaterialQuestion();
+}
+
+function renderMaterialQuestion() {
+  const index = state.materialIndex;
+  const target = targets[index];
+  const fixedOptions = state.materialOptions[index];
+  state.materialSelected = null;
+  state.materialChecked = false;
+
+  const host = $("materialQuestion");
+  host.innerHTML = `
+    <h4>Question ${index + 1} of ${targets.length}</h4>
+    <p>What does <strong class="expression">${target.expression}</strong> mean?</p>
+    <div class="option-list" id="materialOptionList"></div>
+    <div id="materialFeedback" class="feedback" aria-live="polite"></div>
+    <div class="row">
+      <button class="primary" type="button" id="materialCheck">Check Answer</button>
+      <button class="primary hidden" type="button" id="materialNext">Next Question →</button>
+    </div>
+  `;
+
+  const list = $("materialOptionList");
+
+  // Each button is created once for this question.
+  // Click handlers only update the selected styling; they do not rebuild the list.
+  fixedOptions.forEach((optionText, optionIndex) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "option";
+    button.dataset.optionIndex = String(optionIndex);
+
+    const letter = document.createElement("span");
+    letter.className = "letter";
+    letter.textContent = String.fromCharCode(65 + optionIndex);
+
+    const text = document.createElement("span");
+    text.textContent = optionText;
+
+    button.append(letter, text);
+    button.addEventListener("click", () => {
+      if (state.materialChecked) return;
+      state.materialSelected = optionIndex;
+
+      // No innerHTML replacement, rerender, or shuffling here.
+      list.querySelectorAll(".option").forEach((b, i) => {
+        b.classList.toggle("selected", i === optionIndex);
+      });
+      $("materialFeedback").textContent = "";
+    });
+    list.appendChild(button);
+  });
+
+  $("materialCheck").addEventListener("click", checkMaterialAnswer);
+  $("materialNext").addEventListener("click", nextMaterialQuestion);
+}
+
+function checkMaterialAnswer() {
+  if (state.materialChecked) return;
+  if (state.materialSelected === null) {
+    $("materialFeedback").textContent = "Please select an answer first.";
+    return;
+  }
+
+  const index = state.materialIndex;
+  const correctIndex = state.materialOptions[index].indexOf(targets[index].meaning);
+  const buttons = $("materialOptionList").querySelectorAll(".option");
+  const isCorrect = state.materialSelected === correctIndex;
+
+  state.materialChecked = true;
+  buttons.forEach((button, i) => {
+    button.disabled = true;
+    if (i === correctIndex) button.classList.add("correct");
+    if (i === state.materialSelected && !isCorrect) button.classList.add("incorrect");
+  });
+
+  if (isCorrect) {
+    state.materialCorrect++;
+    $("materialFeedback").textContent = "Correct! Great job! ✨";
+    $("materialFeedback").className = "feedback success";
+  } else {
+    $("materialFeedback").textContent =
+      "Not quite. The correct meaning is: " + targets[index].meaning + ".";
+    $("materialFeedback").className = "feedback";
+  }
+
+  $("materialCheck").disabled = true;
+  $("materialNext").classList.remove("hidden");
+  $("materialNext").textContent =
+    index === targets.length - 1 ? "Review Flashcards →" : "Next Question →";
+}
+
+function nextMaterialQuestion() {
+  if (!state.materialChecked) return;
+  state.materialIndex++;
+  setProgress(5 + state.materialIndex / targets.length * 20);
+
+  if (state.materialIndex >= targets.length) {
+    state.flashIndex = 0;
+    showSection("flashSection");
+    renderFlashcard();
+    return;
+  }
+  renderMaterialQuestion();
+}
+
+function speak(text) {
+  if (!("speechSynthesis" in window)) return;
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = "en-US";
+  utterance.rate = 0.85;
+  window.speechSynthesis.speak(utterance);
+}
+
+function renderFlashcard() {
+  const target = targets[state.flashIndex];
+  $("flashEmoji").textContent = target.emoji;
+  $("flashExpression").textContent = target.expression;
+  $("flashMeaning").textContent = target.meaning;
+  $("flashExample").textContent = target.example;
+  $("flashCount").textContent =
+    `Card ${state.flashIndex + 1} of ${targets.length}`;
+
+  $("prevFlash").disabled = state.flashIndex === 0;
+  $("nextFlash").textContent =
+    state.flashIndex === targets.length - 1 ? "Start Quiz →" : "Next →";
+
+  // Speak automatically when the card is shown.
+  speak(target.expression);
+}
+
+$("prevFlash").addEventListener("click", () => {
+  if (state.flashIndex > 0) {
+    state.flashIndex--;
+    renderFlashcard();
+  }
+});
+
+$("nextFlash").addEventListener("click", () => {
+  if (state.flashIndex < targets.length - 1) {
+    state.flashIndex++;
+    renderFlashcard();
+  } else {
+    startShortAnswerQuiz();
+  }
+});
+
+$("speakBtn").addEventListener("click", () => {
+  speak(targets[state.flashIndex].expression);
+});
+
+function startShortAnswerQuiz() {
+  // Randomize question order once, then keep it unchanged.
+  state.quizOrder = shuffle(targets.map((_, i) => i));
+  state.quizIndex = 0;
+  state.typedAnswer = "";
+  state.quizChecked = false;
+  showSection("quizSection");
+  renderQuizQuestion();
+  setProgress(30);
+}
+
+function renderQuizQuestion() {
+  const targetIndex = state.quizOrder[state.quizIndex];
+  const target = targets[targetIndex];
+  const askForMeaning = Math.random() < 0.5;
+
+  // The question type is chosen once and saved on the question record.
+  state.currentQuiz = {
+    targetIndex,
+    askForMeaning,
+    hintShown: false
+  };
+
+  $("quizQuestion").innerHTML = `
+    <h4>Question ${state.quizIndex + 1} of ${targets.length}</h4>
+    <p>${askForMeaning
+      ? `Write the Korean meaning of <strong>${target.expression}</strong>.`
+      : `Write the English expression that means <strong>${target.meaning}</strong>.`}</p>
+    <input type="text" id="quizInput" autocomplete="off"
+      placeholder="${askForMeaning ? "Type the Korean meaning..." : "Type the English expression..."}">
+    <p class="note" id="quizHint">You can try again if your answer is incorrect.</p>
+    <div class="feedback" id="quizFeedback" aria-live="polite"></div>
+    <div class="row">
+      <button type="button" class="primary" id="quizCheck">Check Answer</button>
+      <button type="button" class="primary hidden" id="quizNext">Next Question →</button>
+    </div>
+  `;
+
+  const input = $("quizInput");
+  input.addEventListener("input", () => {
+    state.typedAnswer = input.value;
+  });
+  input.addEventListener("keydown", event => {
+    if (event.key === "Enter" && !state.quizChecked) checkQuizAnswer();
+  });
+
+  $("quizCheck").addEventListener("click", checkQuizAnswer);
+  $("quizNext").addEventListener("click", nextQuizQuestion);
+  state.typedAnswer = "";
+}
+
+function checkQuizAnswer() {
+  if (state.quizChecked) return;
+
+  const input = $("quizInput");
+  const answer = normalize(input.value);
+  if (!answer) {
+    $("quizFeedback").textContent = "Please type an answer first.";
+    return;
+  }
+
+  const target = targets[state.currentQuiz.targetIndex];
+  let correct;
+
+  if (state.currentQuiz.askForMeaning) {
+    correct = target.accepted.some(item => normalize(item) === answer);
+  } else {
+    correct = normalize(target.expression) === answer;
+  }
+
+  if (correct) {
+    state.quizChecked = true;
+    input.disabled = true;
+    $("quizFeedback").textContent = "Correct! Well done! ⭐";
+    $("quizFeedback").className = "feedback success";
+    $("quizCheck").disabled = true;
+    $("quizNext").classList.remove("hidden");
+    $("quizHint").textContent = "Great memory!";
+  } else {
+    $("quizFeedback").textContent = "Not yet. Try again!";
+    $("quizFeedback").className = "feedback";
+    $("quizHint").textContent = state.currentQuiz.askForMeaning
+      ? "Hint: " + target.hint
+      : "Hint: " + target.hint + " Check the spelling on your flashcards.";
+    input.focus();
+    input.select();
+  }
+}
+
+function nextQuizQuestion() {
+  if (!state.quizChecked) return;
+  state.quizIndex++;
+  setProgress(30 + state.quizIndex / targets.length * 20);
+
+  if (state.quizIndex >= targets.length) {
+    showSection("mindsetSection");
+    return;
+  }
+
+  state.quizChecked = false;
+  state.typedAnswer = "";
+  renderQuizQuestion();
+}
+
+$("mindsetOptions").querySelectorAll(".option").forEach(button => {
+  button.addEventListener("click", () => {
+    if (state.mindsetSelected !== null) return;
+    state.mindsetSelected = Number(button.dataset.mindset);
+
+    $("mindsetOptions").querySelectorAll(".option").forEach(b => {
+      b.disabled = true;
+      b.classList.toggle("selected", b === button);
+    });
+
+    if (state.mindsetSelected === 0) {
+      $("mindsetFeedback").textContent =
+        "Exactly! You can learn from mistakes and keep improving. 🌱";
+      $("mindsetFeedback").className = "feedback success";
+    } else {
+      $("mindsetFeedback").textContent =
+        "Remember, learning takes time. Try to be kind to yourself!";
+    }
+    $("mindsetContinue").classList.remove("hidden");
+  });
+});
+
+const schoolItems = [
+  {
+    name: "Pencil",
+    emoji: "✏️",
+    question: "Which expression means 'to reduce the amount of something'?",
+    answer: "cut down on"
+  },
+  {
+    name: "Water bottle",
+    emoji: "🧴",
+    question: "Which expression means 'to participate in an activity'?",
+    answer: "take part in"
+  },
+  {
+    name: "School bag",
+    emoji: "🎒",
+    question: "Which expression means 'to be responsible for something'?",
+    answer: "in charge of"
+  },
+  {
+    name: "English textbook",
+    emoji: "📘",
+    question: "Which expression means 'to find an answer or solution'?",
+    answer: "figure out"
+  },
+  {
+    name: "Glasses",
+    emoji: "👓",
+    question: "Which expression means 'to have an important or positive effect'?",
+    answer: "make a difference"
+  }
+];
+
+function startPacking() {
+  state.packIndex = 0;
+  state.collected = [];
+  state.packSelected = null;
+  state.packChecked = false;
+  showSection("packingSection");
+  renderItemGrid();
+  renderPackingQuestion();
+  setProgress(55);
+}
+
+function renderItemGrid() {
+  $("itemGrid").innerHTML = "";
+  schoolItems.forEach((item, index) => {
+    const div = document.createElement("div");
+    div.className = "item" + (state.collected.includes(index) ? " collected" : "");
+    div.innerHTML = `
+      <div class="big-emoji">${item.emoji}</div>
+      <div class="item-name">${item.name}</div>
+      <div>${state.collected.includes(index) ? "✓ Collected" : "Not yet"}</div>
+    `;
+    $("itemGrid").appendChild(div);
+  });
+}
+
+function renderPackingQuestion() {
+  if (state.packIndex >= schoolItems.length) {
+    showSection("arrivalSection");
+    setProgress(80);
+    return;
+  }
+
+  state.packSelected = null;
+  state.packChecked = false;
+  const item = schoolItems[state.packIndex];
+  const choices = shuffle(targets.map(t => t.expression));
+
+  $("packingQuestion").innerHTML = `
+    <h3>${item.emoji} Collect: ${item.name}</h3>
+    <p>${item.question}</p>
+    <div class="option-list" id="packingOptions"></div>
+    <div class="feedback" id="packingFeedback" aria-live="polite"></div>
+    <button class="primary" type="button" id="packingCheck">Check Answer</button>
+    <button class="primary hidden" type="button" id="packingNext">Collect Item →</button>
+  `;
+
+  const list = $("packingOptions");
+  choices.forEach((choice, index) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "option";
+    button.dataset.choice = choice;
+    button.innerHTML =
+      `<span class="letter">${String.fromCharCode(65 + index)}</span><span>${choice}</span>`;
+
+    button.addEventListener("click", () => {
+      if (state.packChecked) return;
+      state.packSelected = choice;
+      list.querySelectorAll(".option").forEach(b => {
+        b.classList.toggle("selected", b === button);
+      });
+      $("packingFeedback").textContent = "";
+    });
+    list.appendChild(button);
+  });
+
+  $("packingCheck").addEventListener("click", checkPackingAnswer);
+  $("packingNext").addEventListener("click", nextPackingItem);
+}
+
+function checkPackingAnswer() {
+  if (state.packChecked) return;
+  if (!state.packSelected) {
+    $("packingFeedback").textContent = "Choose an answer first.";
+    return;
+  }
+
+  const item = schoolItems[state.packIndex];
+  const correct = state.packSelected === item.answer;
+  const buttons = $("packingOptions").querySelectorAll(".option");
+
+  if (correct) {
+    state.packChecked = true;
+    state.collected.push(state.packIndex);
+    buttons.forEach(button => {
+      button.disabled = true;
+      if (button.dataset.choice === item.answer) button.classList.add("correct");
+    });
+    $("packingFeedback").textContent = "Correct! Item collected! 🎉";
+    $("packingFeedback").className = "feedback success";
+    $("packingCheck").disabled = true;
+    $("packingNext").classList.remove("hidden");
+  } else {
+    $("packingFeedback").textContent = "Try again! Hint: " +
+      targets.find(t => t.expression === item.answer).hint;
+    $("packingFeedback").className = "feedback";
+    buttons.forEach(button => {
+      if (button.dataset.choice === state.packSelected) {
+        button.classList.add("incorrect");
+      }
+    });
+  }
+}
+
+function nextPackingItem() {
+  if (!state.packChecked) return;
+  state.packIndex++;
+  renderItemGrid();
+  setProgress(55 + state.packIndex / schoolItems.length * 25);
+  renderPackingQuestion();
+}
+
+function startDiary() {
+  state.diaryChecked = false;
+  renderStory("diaryStory");
+
+  $("diaryQuestions").innerHTML = "";
+  targets.forEach((target, index) => {
+    const label = document.createElement("label");
+    label.style.display = "block";
+    label.style.margin = "16px 0 7px";
+    label.innerHTML = `<strong>${index + 1}. ${target.expression}</strong>`;
+
+    const input = document.createElement("input");
+    input.type = "text";
+    input.id = "diary" + index;
+    input.placeholder = "Write the Korean meaning...";
+    input.autocomplete = "off";
+    input.setAttribute("aria-label", target.expression + " Korean meaning");
+
+    $("diaryQuestions").append(label, input);
+  });
+
+  $("diaryFeedback").textContent = "";
+  $("diarySubmit").classList.remove("hidden");
+  $("diarySubmit").disabled = false;
+  $("finishBtn").classList.add("hidden");
+  showSection("diarySection");
+  setProgress(90);
+}
+
+$("diarySubmit").addEventListener("click", () => {
+  let missing = [];
+  targets.forEach((target, index) => {
+    const input = $("diary" + index);
+    if (!input.value.trim()) missing.push(index + 1);
+  });
+
+  if (missing.length) {
+    $("diaryFeedback").textContent =
+      "Please complete every expression before checking your diary.";
+    $("diaryFeedback").className = "feedback";
+    $("diary" + (missing[0] - 1)).focus();
+    return;
+  }
+
+  let matched = 0;
+  targets.forEach((target, index) => {
+    const input = $("diary" + index);
+    const answer = normalize(input.value);
+    const isCorrect = target.accepted.some(item => normalize(item) === answer);
+    input.style.borderColor = isCorrect ? "#61a582" : "#d77b7b";
+    if (isCorrect) matched++;
+  });
+
+  if (matched === targets.length) {
+    state.diaryChecked = true;
+    $("diaryFeedback").textContent =
+      "All six meanings are correct! You remembered every expression. 🌟";
+    $("diaryFeedback").className = "feedback success";
+    $("diarySubmit").classList.add("hidden");
+    $("finishBtn").classList.remove("hidden");
+    setProgress(100);
+  } else {
+    $("diaryFeedback").textContent =
+      `${matched} of 6 correct. Review the expressions and try again.`;
+    $("diaryFeedback").className = "feedback";
+  }
+});
+
+$("startBtn").addEventListener("click", startApp);
+$("mindsetContinue").addEventListener("click", startPacking);
+$("diaryStart").addEventListener("click", startDiary);
+$("finishBtn").addEventListener("click", () => {
+  showSection("finishSection");
+  setProgress(100);
+});
+$("restartBtn").addEventListener("click", () => {
+  window.speechSynthesis?.cancel();
+  state.mindsetSelected = null;
+  $("mindsetOptions").querySelectorAll(".option").forEach(button => {
+    button.disabled = false;
+    button.classList.remove("selected");
+  });
+  $("mindsetContinue").classList.add("hidden");
+  $("mindsetFeedback").textContent = "";
+  startApp();
+});
 </script>
 </body>
 </html>
